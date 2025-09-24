@@ -1,9 +1,9 @@
-import Navbar from "./Navbar";
+import CityWeatherApp from "./CityWeatherApp";
 
 export default function App() {
   return (
     <div>
-      <Navbar />
+      <CityWeatherApp />
     </div>
   )
 }
