@@ -11,13 +11,13 @@ export default function WeatherApp (){
   const [selectedDay, setSelectedDay] = useState(null);
   const [detailedForecast, setDetailedForecast] = useState([]);
   
-  // Your OpenWeatherMap API key
+  
   const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
   
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
-    }, 60000); // Update every minute
+    }, 60000); 
 
     return () => clearInterval(timer);
   }, []);
@@ -27,7 +27,7 @@ export default function WeatherApp (){
     setError(null);
     
     try {
-      // Current weather
+      
       const currentResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
       );
@@ -38,7 +38,7 @@ export default function WeatherApp (){
       
       const currentData = await currentResponse.json();
       
-      // 5-day forecast (3-hour intervals)
+      
       const forecastResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
       );
@@ -48,15 +48,10 @@ export default function WeatherApp (){
       }
       
       const forecastData = await forecastResponse.json();
-      
-      // Store all forecast data for detailed view
+
       setDetailedForecast(forecastData.list);
-      
-      // Process forecast data to get daily averages
       const dailyForecast = [];
       const dailyData = {};
-      
-      // Group forecast data by day
       forecastData.list.forEach(item => {
         const date = new Date(item.dt * 1000);
         const dayKey = date.toDateString();
@@ -78,7 +73,7 @@ export default function WeatherApp (){
         dailyData[dayKey].items.push(item);
       });
       
-      // Create daily forecast array
+
       Object.keys(dailyData).slice(0, 6).forEach((dayKey, index) => {
         const date = new Date(dayKey);
         const dayData = dailyData[dayKey];
@@ -173,7 +168,7 @@ export default function WeatherApp (){
       fetchWeather(searchCity.trim());
       setSearchCity('');
       setShowSearch(false);
-      setSelectedDay(null); // Reset selected day when searching
+      setSelectedDay(null); 
     }
   };
 
@@ -216,7 +211,7 @@ export default function WeatherApp (){
     );
   }
 
-  // Show detailed day view
+
   if (selectedDay) {
     return (
       <div className="min-h-screen bg-blue-500 text-white">
@@ -230,10 +225,10 @@ export default function WeatherApp (){
             <div className="text-base font-medium">{formatTime(currentTime)}</div>
             <div className="text-sm opacity-90">{selectedDay.fullDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</div>
           </div>
-          <div className="w-16"></div> {/* Spacer */}
+          <div className="w-16"></div>
         </div>
 
-        {/* Day Weather Detail */}
+
         <div className="flex flex-col items-center justify-center px-4 mt-8">
           <div className="flex items-center justify-center mb-8">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="mr-2">
@@ -242,7 +237,7 @@ export default function WeatherApp (){
             <span className="text-lg">{weatherData.location}</span>
           </div>
           
-          {/* Temperature and Icon */}
+
           <div className="flex items-center justify-center mb-6 space-x-4">
             <div className="text-8xl font-thin">
               {selectedDay.temp}°
@@ -250,12 +245,12 @@ export default function WeatherApp (){
             {getWeatherIcon(selectedDay.icon, 'w-20 h-20')}
           </div>
           
-          {/* Weather Description */}
+
           <div className="text-xl capitalize mb-6">
             {selectedDay.description}
           </div>
           
-          {/* Weather Stats */}
+
           <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-2xl p-6 w-full max-w-sm mb-8">
             <div className="flex justify-between items-center mb-4">
               <span className="text-sm opacity-75">Wind Speed</span>
@@ -267,7 +262,7 @@ export default function WeatherApp (){
             </div>
           </div>
 
-          {/* Hourly forecast for the selected day */}
+
           <div className="w-full max-w-md">
             <h3 className="text-lg font-medium mb-4 text-center">Hourly Forecast</h3>
             <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-2xl p-4">
@@ -295,7 +290,7 @@ export default function WeatherApp (){
     );
   }
 
-  // Main weather view
+
   return (
     <div className="min-h-screen bg-blue-500 relative overflow-hidden">
       <div className="flex justify-between items-center p-4 pt-8 text-white">
@@ -304,10 +299,10 @@ export default function WeatherApp (){
           <div className="text-base font-medium">{formatTime(currentTime)}</div>
           <div className="text-sm opacity-90">{formatDate()}</div>
         </div>
-        <div className="w-6 h-6"></div> {/* Spacer */}
+        <div className="w-6 h-6"></div> 
       </div>
 
-      {/* Centered Search Bar */}
+
       <div className="flex justify-center px-4 mb-8">
         <div className="relative w-full max-w-md">
           <input
@@ -327,9 +322,9 @@ export default function WeatherApp (){
         </div>
       </div>
 
-      {/* Current Weather - Centered */}
+
       <div className="flex flex-col items-center justify-center text-white px-4" style={{marginTop: '10vh'}}>
-        {/* Location */}
+
         <div className="flex items-center justify-center mb-8">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="mr-2">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -337,7 +332,7 @@ export default function WeatherApp (){
           <span className="text-lg">{weatherData.location}</span>
         </div>
         
-        {/* Temperature and Icon */}
+
         <div className="flex items-center justify-center mb-6 space-x-4">
           <div className="text-8xl font-thin">
             {weatherData.current.temp}°
@@ -345,18 +340,18 @@ export default function WeatherApp (){
           {getWeatherIcon(weatherData.current.condition, 'w-20 h-20')}
         </div>
         
-        {/* Weather Description */}
+
         <div className="text-xl capitalize mb-2">
           {weatherData.current.description}
         </div>
         
-        {/* Wind Speed */}
+
         <div className="text-lg opacity-90">
           {weatherData.current.windSpeed} km/h
         </div>
       </div>
 
-      {/* 6-day forecast */}
+
       <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-20 backdrop-blur-md rounded-t-3xl p-4">
         <div className="flex justify-between space-x-2">
           {weatherData.forecast.map((day, index) => (
