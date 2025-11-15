@@ -1,5 +1,5 @@
 {
-  "homepage": "https://yourusername.github.io/Weathe_App",
+  
   "name": "frontendsm",
   "version": "0.1.0",
   "private": true,
@@ -16,6 +16,7 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "homepage": "https://zakariafl27.github.io/Weather_App",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
